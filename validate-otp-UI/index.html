@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+<script type="text/javascript" src="lib/url-template/url-template.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+
+<h1>Text Save - yhr</h1>
+<h1 id="status"><h1>
+<form">
+	<textarea id="otp" name="story"
+          rows="40" cols="70"></textarea>
+		  <br/>
+  <input type="submit" value="Submit" onclick="postText()">
+</form>
+<script type="text/javascript" src="apigClient.js"></script>
+<script type="text/javascript">
+var apigClient = apigClientFactory.newClient();
+function postText()
+{
+	var params = {
+		uuid: uuid,
+		otp: document.getElementById('otp').value
+	}
+	var additionalParams = {
+		headers: {
+		   
+		},
+		queryParams: {
+		   
+		}
+	};
+	apigClient.validateUuidOtpGet(params,null,additionalParams).then(function(result){	
+		document.getElementById("status").innerHTML = result.data;
+	},
+	function(error) {
+		document.getElementById("status").innerHTML = error.data;
+	})
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+var uuid = getParameterByName('uuid');
+var params = {
+	uuid: uuid,
+	otp: document.getElementById('otp')
+}
+var additionalParams = {
+	//If there are any unmodeled query parameters or headers that need to be sent with the request you can add them here
+	headers: {
+	   
+	},
+	queryParams: {
+	   
+	}
+};
+
+
+</script>	
+</body>
+</html>
