@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+<script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+<script type="text/javascript" src="lib/url-template/url-template.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+<script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+
+<h1><u>Create Visitor for Home-Door</u></h1>
+<h1 id="status"><h1>
+<form">
+	<p>Enter Name of Visitor</p>
+	<textarea id="name" name="story"
+          rows="3" cols="20"></textarea>
+		  </br>
+	<p>Enter Phone Number of Visitor</p>
+	<textarea id="phoneNumber" name="story"
+          rows="3" cols="20"></textarea>
+		  <br/>
+  <input type="submit" value="Submit" onclick="postText()">
+</form>
+<script type="text/javascript" src="apigClient.js"></script>
+<script type="text/javascript">
+var apigClient = apigClientFactory.newClient();
+function postText()
+{
+	var params = {};
+	var body = {
+		uuid: uuid,
+		name: document.getElementById('name').value,
+		phoneNumber: document.getElementById('phoneNumber').value
+	}
+	var additionalParams = {
+		headers: {
+		   
+		},
+		queryParams: {
+		   
+		}
+	};
+	apigClient.visitorsPost(params,body,additionalParams).then(function(result){	
+		document.getElementById("status").innerHTML = result.data;
+	},
+	function(error) {
+		document.getElementById("status").innerHTML = error.data;
+	})
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+var uuid = getParameterByName('uuid');
+var body = {
+	uuid: uuid,
+	name: document.getElementById('name'),
+	phoneNumber: document.getElementById('phoneNumber')
+}
+var additionalParams = {
+	//If there are any unmodeled query parameters or headers that need to be sent with the request you can add them here
+	headers: {
+	   
+	},
+	queryParams: {
+	   
+	}
+};
+
+
+</script>	
+</body>
+</html>
